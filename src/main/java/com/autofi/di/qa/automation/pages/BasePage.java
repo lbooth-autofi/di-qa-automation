@@ -1,4 +1,4 @@
-package java.com.autofi.di.qa.automation.pages;
+package com.autofi.di.qa.automation.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

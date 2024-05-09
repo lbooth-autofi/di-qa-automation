@@ -1,4 +1,4 @@
-package java.com.autofi.di.qa.automation.utils;
+package com.autofi.di.qa.automation.utils;
 
 import org.testng.annotations.Test;
 
