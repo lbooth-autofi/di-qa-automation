@@ -23,7 +23,8 @@ public class DealershipListPage extends BasePage {
         this.setPageName(pageName);
     }
 
-    By dealershipSearchBar = By.xpath("//input[@placeholder='Dealership']");
+    public By byHeaderTitle = By.xpath("//div[contains(@class,'bar-title')]");
+    public By bySearchBar = By.xpath("//input[@placeholder='Dealership']");
 
     String templateForDealershipLinkByDealerCode = "//a[contains(@href,'[DEALER_CODE]')]";
     String templateForDealershipLinkByDealerName = "//a[contains(text(),'[DEALER_NAME]')]";
