@@ -10,19 +10,19 @@ import org.testng.annotations.AfterMethod;
 
 import java.util.ArrayList;
 
-public class BaseTest {
+public abstract class BaseTest {
 
     private ArrayList<WebDriver> testDrivers = new ArrayList<>();
 
     public enum TestBrowser {
-        CHROME, CHROME_WITH_ALERTS, EDGE
+        CHROME, CHROME_REMOTE_DEBUG, EDGE
     }
 
     public WebDriver startTestDriver(TestBrowser testBrowser) {
         switch (testBrowser) {
             case CHROME:
                 return startTestDriverChrome();
-            case CHROME_WITH_ALERTS:
+            case CHROME_REMOTE_DEBUG:
                 return startTestDriverChromeWithRemoteDebugger();
             case EDGE:
                 return startTestDriverEdge();
