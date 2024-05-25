@@ -65,7 +65,7 @@ public abstract class BasePageObject {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeoutInSeconds));
             headerTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(bySelector));
         } catch (TimeoutException e) {
-            throw new TimeoutException("unable to display page within " + timeoutInSeconds + " seconds.");
+            throw new TimeoutException("unable to display element within " + timeoutInSeconds + " seconds.");
         }
     }
 
@@ -83,5 +83,17 @@ public abstract class BasePageObject {
         } catch (InvalidElementStateException e) {
             return false;
         }
+    }
+
+    public By getByFromXPathTemplate(String xpathTemplate, String placeholder, String replacement, int timeoutInSeconds) {
+        String selector = xpathTemplate.replace(placeholder, replacement);
+        return By.xpath(selector);
+    }
+
+    public WebElement getWebElementFromCSSTemplate(String cssTemplate, String placeholder, String replacement, int timeoutInSeconds) {
+        String selector = cssTemplate.replace(placeholder, replacement);
+        By bySelector = By.xpath(selector);
+        waitUntilElementIsVisible(bySelector, timeoutInSeconds);
+        return getDriver().findElement(bySelector);
     }
 }

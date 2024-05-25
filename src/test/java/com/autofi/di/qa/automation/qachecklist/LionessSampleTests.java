@@ -1,7 +1,6 @@
 package com.autofi.di.qa.automation.qachecklist;
 
 import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerView;
-import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -9,6 +8,9 @@ import org.testng.asserts.SoftAssert;
 
 import com.autofi.di.qa.automation.BaseTest;
 import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerListView;
+
+import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerView.SideNav.LENDERS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LionessSampleTests extends BaseTest {
 
@@ -38,12 +40,27 @@ public class LionessSampleTests extends BaseTest {
         dealerListView.clickDealerLinkByDealerCode(dealerCode);
 
         DealerView dealerView = new DealerView(driver);
+        assertThat(dealerView.getPageUrl()).contains(dealerCode);
+        dealerView.waitUntilSideNavOptionsVisible();
+
         Assert.assertEquals(
                 dealerView.isVisible(10),
                 true,
                 "Dealer view is not visible"
         );
+        System.out.println("DealerView header title: " + dealerView.getHeaderTitle());
 
-        Assertions.assertThat(dealerView.getPageUrl()).contains(dealerCode);
+        dealerView.clickSideNav(LENDERS);
+
+        // TODO: how do we make sure that we scroll this into view?
+        dealerView.scrollPageSectionIntoView(LENDERS);
+
+        dealerView.waitUntilPageSectionVisible(LENDERS);
+
+        assertThat(dealerView.isPageSectionVisible(LENDERS)).isTrue();
+
+        System.out.println("Page section header text: " +
+                dealerView.getPageSectionHeadingText(LENDERS)
+        );
     }
 }
