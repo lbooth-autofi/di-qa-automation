@@ -1,4 +1,4 @@
-package com.autofi.di.qa.automation.pages.lioness.dealerportal.views;
+package com.autofi.di.qa.automation.pages.lioness.dealerportal.components;
 
 import com.autofi.di.qa.automation.pages.BasePageObject;
 import org.openqa.selenium.By;

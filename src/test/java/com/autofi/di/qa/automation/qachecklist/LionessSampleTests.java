@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import com.autofi.di.qa.automation.BaseTest;
 import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerListView;
 
-import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerView.PageSection.LENDERS;
+import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerPageSection.LENDERS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LionessSampleTests extends BaseTest {
