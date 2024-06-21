@@ -1,12 +1,11 @@
 package com.autofi.di.qa.automation;
 
-import com.autofi.di.qa.automation.utils.WaitUtils;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 
 import java.util.ArrayList;
 
@@ -39,7 +38,7 @@ public abstract class BaseTest {
 
     public WebDriver startTestDriverChromeWithRemoteDebugger() {
         ChromeOptions options = new ChromeOptions();
-        // set remote debugger options
+        // TODO: set remote debugger options
         WebDriver driver = new ChromeDriver(options);
         testDrivers.add(driver);
         return driver;
@@ -51,7 +50,7 @@ public abstract class BaseTest {
         return driver;
     }
 
-    @AfterMethod
+    @AfterTest
     public void tearDown() {
         if (!testDrivers.isEmpty()) {
             for(WebDriver driver : testDrivers) {

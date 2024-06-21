@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import com.autofi.di.qa.automation.BaseTest;
 import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerListView;
 
-import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerView.SideNav.LENDERS;
+import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerView.PageSection.LENDERS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LionessSampleTests extends BaseTest {
@@ -34,33 +34,32 @@ public class LionessSampleTests extends BaseTest {
                 "Dealership list page is not visible"
         );
 
-        String dealerCode = "4I2A";
+        String dealerCode = "OK7Q";
 
         dealerListView.enterSearchBarText(dealerCode);
         dealerListView.clickDealerLinkByDealerCode(dealerCode);
 
         DealerView dealerView = new DealerView(driver);
         assertThat(dealerView.getPageUrl()).contains(dealerCode);
-        dealerView.waitUntilSideNavOptionsVisible();
+        dealerView.sideNav.waitUntilSideNavOptionsVisible();
 
         Assert.assertEquals(
-                dealerView.isVisible(10),
+                dealerView.pageHeader.isVisible(10),
                 true,
                 "Dealer view is not visible"
         );
-        System.out.println("DealerView header title: " + dealerView.getHeaderTitle());
+        System.out.println("DealerView header title: " + dealerView.pageHeader.getHeaderTitle());
 
-        dealerView.clickSideNav(LENDERS);
+        dealerView.sideNav.clickSideNav(LENDERS);
 
-        // TODO: how do we make sure that we scroll this into view?
-        dealerView.scrollPageSectionIntoView(LENDERS);
+        dealerView.scrollSectionIntoView(LENDERS);
 
-        dealerView.waitUntilPageSectionVisible(LENDERS);
+        dealerView.waitUntilSectionVisible(LENDERS);
 
-        assertThat(dealerView.isPageSectionVisible(LENDERS)).isTrue();
+        assertThat(dealerView.isSectionVisible(LENDERS, 10)).isTrue();
 
         System.out.println("Page section header text: " +
-                dealerView.getPageSectionHeadingText(LENDERS)
+                dealerView.getSectionHeadingText(LENDERS)
         );
     }
 }

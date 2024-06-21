@@ -1,6 +1,7 @@
 package com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers;
 
 import com.autofi.di.qa.automation.pages.BasePageObject;
+import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.PageHeader;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,14 +12,14 @@ import java.util.regex.Pattern;
 
 public class DealerView extends BasePageObject {
 
-    public enum SideNav {
+    public enum PageSection {
         GENERAL, INTEGRATIONS, PRICING_CI, PATHWAYS,
         DEALMAKER, TRADE_IN, NOTIFICATIONS, FI_PRODUCTS,
         LENDERS, DEALER_PORTAL, PARTNERS_API, STATUS_BILLING, ADVANCED,
         USERS, VEHICLES, SETTINGS_LOGS;
 
-        public static String toSideNavText(SideNav sideNav) {
-            return switch (sideNav) {
+        public static String toSideNavText(PageSection pageSection) {
+            return switch (pageSection) {
                 case GENERAL -> "General";
                 case INTEGRATIONS -> "Integrations";
                 case PRICING_CI -> "Pricing C&I";
@@ -38,8 +39,8 @@ public class DealerView extends BasePageObject {
             };
         }
 
-        public static String toHeadingId(SideNav sideNav) {
-            return switch (sideNav) {
+        public static String toHeadingId(PageSection pageSection) {
+            return switch (pageSection) {
                 case GENERAL -> "general";
                 case INTEGRATIONS -> "integrations";
                 case PRICING_CI -> "pricingandci";
@@ -70,56 +71,42 @@ public class DealerView extends BasePageObject {
         this.setPageName(pageName);
     }
 
-    public boolean isVisible(int timeoutInSeconds) {
-        return isVisible(byHeaderTitle, timeoutInSeconds);
+    // PAGE SECTIONS
+    public PageHeader pageHeader = new PageHeader(getDriver());
+    public DealerSideNav sideNav = new DealerSideNav(getDriver());
+
+    /* --------- */
+    // "//div[contains(@class,'index__ContentSection')]/h1[contains(@class,'index__heading')]"
+    // "//div[@id='integrations']/descendant::div[contains(@class,'index__ContentSection')]/h1[contains(@class,'index__heading')]"
+
+    public String templateForContentSection = "//div[@id='HEADING_ID']" +
+            "/descendant::div[contains(@class,'index__ContentSection')]" +
+            "/h1[contains(@class,'index__heading')]";
+
+    public void waitUntilSectionVisible(PageSection pageSection) {
+        waitUntilElementIsVisible(By.id(PageSection.toHeadingId(pageSection)), 10);
     }
 
-    public By byHeaderTitle = By.cssSelector("div[class*='index__bar-title']");
-
-    public String getHeaderTitle() {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.textMatches(byHeaderTitle, Pattern.compile("[\\w\\W]+")));
-        String headerTitle = getDriver().findElement(byHeaderTitle).getText();
-        return headerTitle;
+    private By getSectionBy(PageSection pageSection, int timeoutInSeconds) {
+        String headingId = PageSection.toHeadingId(pageSection);
+        return getByFromXPathTemplate(templateForContentSection, "HEADING_ID",
+                headingId, timeoutInSeconds);
     }
 
-    public By bySideNavOptions = By.cssSelector("ul[class*=index__nav] li");
-    public By bySideNavOptionSelected = By.cssSelector("ul[class*=index__nav] li[class*=active]");
-    public String templateForSideNavOption = "//ul[contains(@class,'index__nav')]/li[text()='NAV_OPTION_NAME']";
-
-    public void waitUntilSideNavOptionsVisible() {
-        waitUntilAllElementsVisible(bySideNavOptions, 10);
+    private WebElement getSectionWebElement(PageSection pageSection, int timeoutInSeconds) {
+        return getDriver().findElement(getSectionBy(pageSection, timeoutInSeconds));
     }
 
-
-    private By getSideNavByLocator(SideNav sideNav, int timeoutInSeconds) {
-        String sideNavText = SideNav.toSideNavText(sideNav);
-        return getByFromXPathTemplate(templateForSideNavOption, "NAV_OPTION_NAME", sideNavText, timeoutInSeconds);
+    public boolean isSectionVisible(PageSection pageSection, int timeoutInSeconds) {
+        return getSectionWebElement(pageSection, timeoutInSeconds).isDisplayed();
     }
 
-    private WebElement getSideNavWebElement(SideNav sideNav, int timeoutInSeconds) {
-        return getDriver().findElement(getSideNavByLocator(sideNav,timeoutInSeconds));
-    }
-
-    public void clickSideNav(SideNav sideNav) {
-        WebElement sideNavElement = getSideNavWebElement(sideNav,10);
-        sideNavElement.click();
-    }
-
-    public void waitUntilPageSectionVisible(SideNav sideNav) {
-        waitUntilElementIsVisible(By.id(SideNav.toHeadingId(sideNav)), 10);
-    }
-
-    public boolean isPageSectionVisible(SideNav sideNav) {
-        return getSideNavWebElement(sideNav, 10).isDisplayed();
-    }
-
-    public void scrollPageSectionIntoView(SideNav sideNav) {
+    public void scrollSectionIntoView(PageSection pageSection) {
         Actions actions = new Actions(getDriver());
-        actions.moveToElement(getSideNavWebElement(sideNav, 10)).perform();
+        actions.moveToElement(getSectionWebElement(pageSection, 10)).perform();
     }
 
-    public String getPageSectionHeadingText(SideNav sideNav) {
-        return getSideNavWebElement(sideNav, 10).getText();
+    public String getSectionHeadingText(PageSection pageSection) {
+        return getSectionWebElement(pageSection, 10).getText();
     }
 }
