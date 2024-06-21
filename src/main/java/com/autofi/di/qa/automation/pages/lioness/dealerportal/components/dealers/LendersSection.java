@@ -4,12 +4,12 @@ import com.autofi.di.qa.automation.pages.BasePageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class Lenders extends BasePageObject {
+public class LendersSection extends BasePageObject {
 
     public String pageUrl = "";
     public String pageName = "Dealer Lenders section";
 
-    public Lenders(WebDriver driver) {
+    public LendersSection(WebDriver driver) {
         super(driver);
         this.pageUrl = pageUrl;
         this.pageName = pageName;
@@ -23,6 +23,6 @@ public class Lenders extends BasePageObject {
     // CAPTIVE LENDERS
     //public enum CaptiveLenders
 
-    // TODO: convert this selector into a template using the lender acronym and parentheses
+    // TODO: convert this into a template using the lender acronym and parentheses
     public By acuraFinSvcsBy = By.xpath("//input[contains(@aria-label,'(AFS)')]");
 }
