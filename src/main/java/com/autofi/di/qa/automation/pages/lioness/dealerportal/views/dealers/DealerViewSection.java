@@ -1,13 +1,13 @@
 package com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers;
 
-public enum DealerPageSection {
+public enum DealerViewSection {
     GENERAL, INTEGRATIONS, PRICING_CI, PATHWAYS,
     DEALMAKER, TRADE_IN, NOTIFICATIONS, FI_PRODUCTS,
     LENDERS, DEALER_PORTAL, PARTNERS_API, STATUS_BILLING, ADVANCED,
     USERS, VEHICLES, SETTINGS_LOGS;
 
-    public static String toSideNavText(DealerPageSection dealerPageSection) {
-        return switch (dealerPageSection) {
+    public static String toSideNavText(DealerViewSection dealerViewSection) {
+        return switch (dealerViewSection) {
             case GENERAL -> "General";
             case INTEGRATIONS -> "Integrations";
             case PRICING_CI -> "Pricing C&I";
@@ -27,8 +27,8 @@ public enum DealerPageSection {
         };
     }
 
-    public static String toHeadingId(DealerPageSection dealerPageSection) {
-        return switch (dealerPageSection) {
+    public static String toHeadingId(DealerViewSection dealerViewSection) {
+        return switch (dealerViewSection) {
             case GENERAL -> "general";
             case INTEGRATIONS -> "integrations";
             case PRICING_CI -> "pricingandci";

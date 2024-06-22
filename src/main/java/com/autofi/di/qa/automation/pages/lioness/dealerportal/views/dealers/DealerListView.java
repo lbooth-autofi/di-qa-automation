@@ -3,24 +3,13 @@ package com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers;
 import org.openqa.selenium.*;
 
 import com.autofi.di.qa.automation.pages.BasePageObject;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class DealerListView extends BasePageObject {
 
-    // TODO: change pageUrl based on the desired test environment
-    String pageUrl = "https://account.autofi.com/#/dealers";
+    String pageUrl = "";
     String pageName = "Dealership List";
 
     public DealerListView(WebDriver driver) {
-        super(driver);
-        this.setPageUrl(pageUrl);
-        this.setPageName(pageName);
-    }
-
-    public DealerListView(WebDriver driver, String pageUrl, String pageName) {
         super(driver);
         this.setPageUrl(pageUrl);
         this.setPageName(pageName);

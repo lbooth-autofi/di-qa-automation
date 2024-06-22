@@ -20,11 +20,15 @@ public class PageHeader extends BasePageObject {
         this.setPageName(pageName);
     }
 
+    public By byHeaderTitle = By.cssSelector("div[class*='index__bar-title']");
+
     public boolean isVisible(int timeoutInSeconds) {
         return isVisible(byHeaderTitle, timeoutInSeconds);
     }
 
-    public By byHeaderTitle = By.cssSelector("div[class*='index__bar-title']");
+    public void waitUntilHeaderVisible(int timeoutInSeconds) {
+        waitUntilElementIsVisible(byHeaderTitle, timeoutInSeconds);
+    }
 
     public String getHeaderTitle() {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
@@ -32,5 +36,4 @@ public class PageHeader extends BasePageObject {
         String headerTitle = getDriver().findElement(byHeaderTitle).getText();
         return headerTitle;
     }
-
 }

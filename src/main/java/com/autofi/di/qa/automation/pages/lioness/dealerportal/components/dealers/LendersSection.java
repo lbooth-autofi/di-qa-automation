@@ -20,9 +20,13 @@ public class LendersSection extends BasePageObject {
     public By dealerTrackUSIdBy = By.xpath("//input[@id='dealer.settings.dealertrack.dealerId']");
     public By dealerTrackCAIdBy = By.xpath("//input[@id='dealer.settings.dealertrackCanada.dealerId']");
 
-    // CAPTIVE LENDERS
-    //public enum CaptiveLenders
+    // pattern: find a captive lender using its acronym in parentheses
+    // public By acuraFinSvcsBy = By.xpath("//input[contains(@aria-label,'(AFS)')]");
+    private String templateForCaptiveLender = "//input[contains(@aria-label,'(CAPTIVE_LENDER_ABBREVIATION)')]";
 
-    // TODO: convert this into a template using the lender acronym and parentheses
-    public By acuraFinSvcsBy = By.xpath("//input[contains(@aria-label,'(AFS)')]");
+    private By getCaptiveLenderLocator(CaptiveLender captiveLender) {
+        String captiveLenderAbbreviation = CaptiveLender.toLenderAbbreviation(captiveLender);
+        return getByFromXPathTemplate(templateForCaptiveLender, "CAPTIVE_LENDER_ABBREVIATION", captiveLenderAbbreviation, 10);
+    }
+
 }

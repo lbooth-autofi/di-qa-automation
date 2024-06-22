@@ -1,7 +1,8 @@
 package com.autofi.di.qa.automation.pages.lioness.dealerportal.components.dealers;
 
 import com.autofi.di.qa.automation.pages.BasePageObject;
-import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerPageSection;
+import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerViewSection;
+import com.autofi.di.qa.automation.utils.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,18 +27,21 @@ public class DealerSideNav extends BasePageObject {
     }
 
 
-    private By getSideNavByLocator(DealerPageSection dealerPageSection, int timeoutInSeconds) {
-        String sideNavText = DealerPageSection.toSideNavText(dealerPageSection);
+    private By getSideNavLocator(DealerViewSection dealerViewSection, int timeoutInSeconds) {
+        String sideNavText = DealerViewSection.toSideNavText(dealerViewSection);
         return getByFromXPathTemplate(templateForSideNavOption, "NAV_OPTION_NAME", sideNavText, timeoutInSeconds);
     }
 
-    private WebElement getSideNavWebElement(DealerPageSection dealerPageSection, int timeoutInSeconds) {
-        return getDriver().findElement(getSideNavByLocator(dealerPageSection,timeoutInSeconds));
+    private WebElement getSideNavWebElement(DealerViewSection dealerViewSection, int timeoutInSeconds) {
+        return getDriver().findElement(getSideNavLocator(dealerViewSection,timeoutInSeconds));
     }
 
-    public void clickSideNav(DealerPageSection dealerPageSection) {
-        WebElement sideNavElement = getSideNavWebElement(dealerPageSection,10);
+    public void clickSideNav(DealerViewSection dealerViewSection) {
+        WebElement sideNavElement = getSideNavWebElement(dealerViewSection,10);
         sideNavElement.click();
+
+        // need to wait momentarily for Dealer view to catch up
+        WaitUtils.hardWaitForSeconds(2);
     }
 
 }

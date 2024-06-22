@@ -30,30 +30,30 @@ public class DealerView extends BasePageObject {
             "/descendant::div[contains(@class,'index__ContentSection')]" +
             "/h1[contains(@class,'index__heading')]";
 
-    public void waitUntilSectionVisible(DealerPageSection dealerPageSection) {
-        waitUntilElementIsVisible(By.id(DealerPageSection.toHeadingId(dealerPageSection)), 10);
+    public void waitUntilSectionVisible(DealerViewSection dealerViewSection) {
+        waitUntilElementIsVisible(By.id(DealerViewSection.toHeadingId(dealerViewSection)), 10);
     }
 
-    private By getSectionBy(DealerPageSection dealerPageSection, int timeoutInSeconds) {
-        String headingId = DealerPageSection.toHeadingId(dealerPageSection);
+    private By getSectionBy(DealerViewSection dealerViewSection, int timeoutInSeconds) {
+        String headingId = DealerViewSection.toHeadingId(dealerViewSection);
         return getByFromXPathTemplate(templateForContentSection, "HEADING_ID",
                 headingId, timeoutInSeconds);
     }
 
-    private WebElement getSectionWebElement(DealerPageSection dealerPageSection, int timeoutInSeconds) {
-        return getDriver().findElement(getSectionBy(dealerPageSection, timeoutInSeconds));
+    private WebElement getSectionWebElement(DealerViewSection dealerViewSection, int timeoutInSeconds) {
+        return getDriver().findElement(getSectionBy(dealerViewSection, timeoutInSeconds));
     }
 
-    public boolean isSectionVisible(DealerPageSection dealerPageSection, int timeoutInSeconds) {
-        return getSectionWebElement(dealerPageSection, timeoutInSeconds).isDisplayed();
+    public boolean isSectionVisible(DealerViewSection dealerViewSection, int timeoutInSeconds) {
+        return getSectionWebElement(dealerViewSection, timeoutInSeconds).isDisplayed();
     }
 
-    public void scrollSectionIntoView(DealerPageSection dealerPageSection) {
+    public void scrollSectionIntoView(DealerViewSection dealerViewSection) {
         Actions actions = new Actions(getDriver());
-        actions.moveToElement(getSectionWebElement(dealerPageSection, 10)).perform();
+        actions.moveToElement(getSectionWebElement(dealerViewSection, 10)).perform();
     }
 
-    public String getSectionHeadingText(DealerPageSection dealerPageSection) {
-        return getSectionWebElement(dealerPageSection, 10).getText();
+    public String getSectionHeadingText(DealerViewSection dealerViewSection) {
+        return getSectionWebElement(dealerViewSection, 10).getText();
     }
 }

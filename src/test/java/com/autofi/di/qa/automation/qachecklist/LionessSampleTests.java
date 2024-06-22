@@ -1,65 +1,81 @@
 package com.autofi.di.qa.automation.qachecklist;
 
-import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerView;
+import com.autofi.di.qa.automation.BaseTest;
+import com.autofi.di.qa.automation.pages.lioness.dealerportal.DealerPortal;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
-import com.autofi.di.qa.automation.BaseTest;
-import com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerListView;
-
-import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerPageSection.LENDERS;
+import static com.autofi.di.qa.automation.pages.lioness.dealerportal.DealerPortalEnvironment.PROD;
+import static com.autofi.di.qa.automation.pages.lioness.dealerportal.DealerPortalRoute.DEALERS;
+import static com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers.DealerViewSection.LENDERS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LionessSampleTests extends BaseTest {
 
     @Test
-    public void testUsingDealershipList() {
+    public void testNavigatingToDealerViewSection() {
         // TODO: replace this with a call to a browser with an open port for debugging
         WebDriver driver = startTestDriver(TestBrowser.CHROME);
         driver.manage().window().maximize();
-        SoftAssert softAssert = new SoftAssert();
 
-        DealerListView dealerListView = new DealerListView(driver);
+        DealerPortal dealerPortal = new DealerPortal(driver);
+        dealerPortal.navToPage(PROD, DEALERS);
 
         // unless you use a browser with remote debugger
         // that you are already logged into for AutoFi
-        // you will need to login for the test to continue
-        dealerListView.navToPage();
-
-        Assert.assertEquals(
-                dealerListView.isVisible(120),
-                true,
+        // you will need to log in for the test to continue
+        Assert.assertTrue(
+                dealerPortal.dealerListView.isVisible(120),
                 "Dealership list page is not visible"
         );
 
         String dealerCode = "OK7Q";
 
-        dealerListView.enterSearchBarText(dealerCode);
-        dealerListView.clickDealerLinkByDealerCode(dealerCode);
+        dealerPortal.dealerListView.enterSearchBarText(dealerCode);
+        dealerPortal.dealerListView.clickDealerLinkByDealerCode(dealerCode);
 
-        DealerView dealerView = new DealerView(driver);
-        assertThat(dealerView.getPageUrl()).contains(dealerCode);
-        dealerView.sideNav.waitUntilSideNavOptionsVisible();
+        assertThat(dealerPortal.getPageUrl()).contains(dealerCode);
+        dealerPortal.dealerView.sideNav.waitUntilSideNavOptionsVisible();
 
-        Assert.assertEquals(
-                dealerView.pageHeader.isVisible(10),
-                true,
+        Assert.assertTrue(
+                dealerPortal.dealerView.pageHeader.isVisible(10),
                 "Dealer view is not visible"
         );
-        System.out.println("DealerView header title: " + dealerView.pageHeader.getHeaderTitle());
 
-        dealerView.sideNav.clickSideNav(LENDERS);
+        System.out.println("Dealer view header title: " + dealerPortal.dealerView.pageHeader.getHeaderTitle());
 
-        dealerView.scrollSectionIntoView(LENDERS);
+        dealerPortal.dealerView.sideNav.clickSideNav(LENDERS);
 
-        dealerView.waitUntilSectionVisible(LENDERS);
+        dealerPortal.dealerView.scrollSectionIntoView(LENDERS);
 
-        assertThat(dealerView.isSectionVisible(LENDERS, 10)).isTrue();
+        dealerPortal.dealerView.waitUntilSectionVisible(LENDERS);
+
+        assertThat(dealerPortal.dealerView.isSectionVisible(LENDERS, 10)).isTrue();
+
+        System.out.println("Dealer view header text: " +
+                dealerPortal.dealerView.getSectionHeadingText(LENDERS)
+        );
+    }
+
+    @Test
+    public void testSelectingCaptiveAndNonCaptiveLenders() {
+        // TODO: replace this with a call to a browser with an open port for debugging
+        WebDriver driver = startTestDriver(TestBrowser.CHROME);
+        driver.manage().window().maximize();
+
+        DealerPortal dealerPortal = new DealerPortal(driver);
+
+        dealerPortal.navToDealerViewSection(PROD, DEALERS, "OK7Q", LENDERS);
+
+        assertThat(dealerPortal.dealerView.isSectionVisible(LENDERS, 10)).isTrue();
+
+        System.out.println("DealerPortal header title: " + dealerPortal.dealerView.pageHeader.getHeaderTitle());
 
         System.out.println("Page section header text: " +
-                dealerView.getSectionHeadingText(LENDERS)
+                dealerPortal.dealerView.getSectionHeadingText(LENDERS)
         );
+
+        // TODO: scroll to captive lenders and select each one in a loop
     }
 }

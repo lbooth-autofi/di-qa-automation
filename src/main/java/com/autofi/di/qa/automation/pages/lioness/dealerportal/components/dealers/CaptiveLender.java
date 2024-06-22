@@ -1,9 +1,7 @@
 package com.autofi.di.qa.automation.pages.lioness.dealerportal.components.dealers;
 
-import org.openqa.selenium.InvalidArgumentException;
-
 /*
-    As of 21 June 2024:
+    Captive Lenders as of 21 June 2024:
     ====================
     Acura Finance Services (AFS)
     Audi Financial Services (AUDI)
@@ -43,7 +41,7 @@ import org.openqa.selenium.InvalidArgumentException;
     Volvo Car Financial Services (VCFS)
     None (NONE)
     */
-public enum CaptiveLenders {
+public enum CaptiveLender {
     ACURA_AFS, AUDI_AUDI, BMW_BMW, CADILLAC_CADF, CHRYSLER_CCAF,
     FORD_FMCA, FORD_FMCC, FORD_FMCCCOX, GM_GMF, GM_GMFCA, GENESIS_GFS,
     HONDA_HFS, HYUNDAI_HMF, INFINITI_IFS, JAGUAR_JFG, KIA_KMFC, KIA_KMF,
@@ -52,7 +50,7 @@ public enum CaptiveLenders {
     PORSCHE_PFS, TOYOTA_SETF, TOYOTA_SETFCOX, STELLANTIS_SFS,
     SUBARU_SFSC, SUBARU_SMF, TOYOTA_TFS, VOLKSWAGEN_VCA, VOLVO_VCFS, NONE;
     
-    public static String toLenderName(CaptiveLenders captiveLender) {
+    public static String toLenderName(CaptiveLender captiveLender) {
         return switch(captiveLender) {
             case ACURA_AFS -> "Acura Finance Services";
             case AUDI_AUDI -> "Audi Financial Services";
@@ -94,7 +92,7 @@ public enum CaptiveLenders {
         };
     }
 
-    public static String toLenderAbbreviation(CaptiveLenders captiveLender) {
+    public static String toLenderAbbreviation(CaptiveLender captiveLender) {
         return switch (captiveLender) {
             case ACURA_AFS -> "AFS";
             case AUDI_AUDI -> "AUDI";
