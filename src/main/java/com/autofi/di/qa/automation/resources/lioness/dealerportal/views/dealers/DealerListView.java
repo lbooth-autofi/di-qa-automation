@@ -1,8 +1,8 @@
-package com.autofi.di.qa.automation.pages.lioness.dealerportal.views.dealers;
+package com.autofi.di.qa.automation.resources.lioness.dealerportal.views.dealers;
 
 import org.openqa.selenium.*;
 
-import com.autofi.di.qa.automation.pages.BasePageObject;
+import com.autofi.di.qa.automation.resources.BasePageObject;
 
 public class DealerListView extends BasePageObject {
 

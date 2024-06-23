@@ -1,4 +1,4 @@
-package com.autofi.di.qa.automation.pages.lioness.dealerportal;
+package com.autofi.di.qa.automation.resources.lioness.dealerportal;
 
 public enum DealerPortalRoute {
     DEALERS,

@@ -1,6 +1,6 @@
-package com.autofi.di.qa.automation.pages.lioness.dealerportal.components;
+package com.autofi.di.qa.automation.resources.lioness.dealerportal.components;
 
-import com.autofi.di.qa.automation.pages.BasePageObject;
+import com.autofi.di.qa.automation.resources.BasePageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;

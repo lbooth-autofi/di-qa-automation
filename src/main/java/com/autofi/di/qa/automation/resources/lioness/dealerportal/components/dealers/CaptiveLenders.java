@@ -1,4 +1,4 @@
-package com.autofi.di.qa.automation.pages.lioness.dealerportal.components.dealers;
+package com.autofi.di.qa.automation.resources.lioness.dealerportal.components.dealers;
 
 /*
     Captive Lenders as of 21 June 2024:
@@ -41,16 +41,16 @@ package com.autofi.di.qa.automation.pages.lioness.dealerportal.components.dealer
     Volvo Car Financial Services (VCFS)
     None (NONE)
     */
-public enum CaptiveLender {
+public enum CaptiveLenders {
     ACURA_AFS, AUDI_AUDI, BMW_BMW, CADILLAC_CADF, CHRYSLER_CCAF,
     FORD_FMCA, FORD_FMCC, FORD_FMCCCOX, GM_GMF, GM_GMFCA, GENESIS_GFS,
     HONDA_HFS, HYUNDAI_HMF, INFINITI_IFS, JAGUAR_JFG, KIA_KMFC, KIA_KMF,
-    LANDROVER_LRFG, LEXUS_LFS, LINCOLN_LANC, LINCOLN_LAFS, MASERATI_MAS,
+    LANDROVER_LRFG, LEXUS_LFS, LINCOLN_LAFC, LINCOLN_LAFS, MASERATI_MAS,
     MAZDA_MAZ, MERCEDESBENZ_MFS, MINI_MINI, MITSUBISHI_MMCA, NISSAN_NMAC,
     PORSCHE_PFS, TOYOTA_SETF, TOYOTA_SETFCOX, STELLANTIS_SFS,
     SUBARU_SFSC, SUBARU_SMF, TOYOTA_TFS, VOLKSWAGEN_VCA, VOLVO_VCFS, NONE;
     
-    public static String toLenderName(CaptiveLender captiveLender) {
+    public static String toLenderName(CaptiveLenders captiveLender) {
         return switch(captiveLender) {
             case ACURA_AFS -> "Acura Finance Services";
             case AUDI_AUDI -> "Audi Financial Services";
@@ -71,7 +71,7 @@ public enum CaptiveLender {
             case KIA_KMF -> "Kia Motors Finance";
             case LANDROVER_LRFG -> "Land Rover Financial Group";
             case LEXUS_LFS -> "Lexus National Financial Services";
-            case LINCOLN_LANC -> "Lincoln Automotive Financial Services";
+            case LINCOLN_LAFC -> "Lincoln Automotive Financial Services";
             case LINCOLN_LAFS -> "Lincoln Automotive Financial Services";
             case MASERATI_MAS -> "Maserati Capital USA";
             case MAZDA_MAZ -> "Mazda Financial Services";
@@ -92,7 +92,7 @@ public enum CaptiveLender {
         };
     }
 
-    public static String toLenderAbbreviation(CaptiveLender captiveLender) {
+    public static String toLenderAbbreviation(CaptiveLenders captiveLender) {
         return switch (captiveLender) {
             case ACURA_AFS -> "AFS";
             case AUDI_AUDI -> "AUDI";
@@ -113,7 +113,7 @@ public enum CaptiveLender {
             case KIA_KMF -> "KMF";
             case LANDROVER_LRFG -> "LRFG";
             case LEXUS_LFS -> "LFS";
-            case LINCOLN_LANC -> "LANC";
+            case LINCOLN_LAFC -> "LAFC";
             case LINCOLN_LAFS -> "LAFS";
             case MASERATI_MAS -> "MAS";
             case MAZDA_MAZ -> "MAZ";
