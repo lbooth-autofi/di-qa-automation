@@ -47,7 +47,8 @@ public enum CaptiveLenders {
     HONDA_HFS, HYUNDAI_HMF, INFINITI_IFS, JAGUAR_JFG, KIA_KMFC, KIA_KMF,
     LANDROVER_LRFG, LEXUS_LFS, LINCOLN_LAFC, LINCOLN_LAFS, MASERATI_MAS,
     MAZDA_MAZ, MERCEDESBENZ_MFS, MINI_MINI, MITSUBISHI_MMCA, NISSAN_NMAC,
-    PORSCHE_PFS, TOYOTA_SETF, TOYOTA_SETFCOX, STELLANTIS_SFS,
+    PORSCHE_PFS, // TOYOTA_SETF,
+    TOYOTA_SETFCOX, STELLANTIS_SFS,
     SUBARU_SFSC, SUBARU_SMF, TOYOTA_TFS, VOLKSWAGEN_VCA, VOLVO_VCFS, NONE;
     
     public static String toLenderName(CaptiveLenders captiveLender) {
@@ -80,7 +81,7 @@ public enum CaptiveLenders {
             case MITSUBISHI_MMCA -> "Mitsubishi Motors of North America";
             case NISSAN_NMAC -> "Nissan Motor Acceptance Corporation";
             case PORSCHE_PFS -> "Porsche Financial Services";
-            case TOYOTA_SETF -> "Southeast Toyota Finance";
+            // case TOYOTA_SETF -> "Southeast Toyota Finance";
             case TOYOTA_SETFCOX -> "Southeast Toyota Finance";
             case STELLANTIS_SFS -> "Stellantis Financial Services";
             case SUBARU_SFSC -> "Subaru Financial Services Canada";
@@ -122,7 +123,7 @@ public enum CaptiveLenders {
             case MITSUBISHI_MMCA -> "MMCA";
             case NISSAN_NMAC -> "NMAC";
             case PORSCHE_PFS -> "PFS";
-            case TOYOTA_SETF -> "SETF";
+            // case TOYOTA_SETF -> "SETF";
             case TOYOTA_SETFCOX -> "SETFCOX";
             case STELLANTIS_SFS -> "SFS";
             case SUBARU_SFSC -> "SFSC";
@@ -131,6 +132,49 @@ public enum CaptiveLenders {
             case VOLKSWAGEN_VCA -> "VCA";
             case VOLVO_VCFS -> "VCFS";
             case NONE -> "NONE";
+        };
+    }
+    
+    public static CaptiveLenders toCaptiveLenders(String lenderAbbreviation) {
+        return switch (lenderAbbreviation.toUpperCase().trim()) {
+            case "AFS" -> ACURA_AFS;
+            case "AUDI" -> AUDI_AUDI;
+            case "BMW" -> BMW_BMW;
+            case "CADF" -> CADILLAC_CADF;
+            case "CCAF" -> CHRYSLER_CCAF;
+            case "FMCA" -> FORD_FMCA;
+            case "FMCC" -> FORD_FMCC;
+            case "FMCCCOX" -> FORD_FMCCCOX;
+            case "GMF" -> GM_GMF;
+            case "GMFCA" -> GM_GMFCA;
+            case "GFS" -> GENESIS_GFS;
+            case "HFS" -> HONDA_HFS;
+            case "HMF" -> HYUNDAI_HMF;
+            case "IFS" -> INFINITI_IFS;
+            case "JFG" -> JAGUAR_JFG;
+            case "KMFC" -> KIA_KMFC;
+            case "KMF" -> KIA_KMF;
+            case "LRFG" -> LANDROVER_LRFG;
+            case "LFS" -> LEXUS_LFS;
+            case "LAFC" -> LINCOLN_LAFC;
+            case "LAFS" -> LINCOLN_LAFS;
+            case "MAS" -> MASERATI_MAS;
+            case "MAZ" -> MAZDA_MAZ;
+            case "MFS" -> MERCEDESBENZ_MFS;
+            case "MINI" -> MINI_MINI;
+            case "MMCA" -> MITSUBISHI_MMCA;
+            case "NMAC" -> NISSAN_NMAC;
+            case "PFS" -> PORSCHE_PFS;
+            // case "SETF" -> TOYOTA_SETF;
+            case "SETFCOX" -> TOYOTA_SETFCOX;
+            case "SFS" -> STELLANTIS_SFS;
+            case "SFSC" -> SUBARU_SFSC;
+            case "SMF" -> SUBARU_SMF;
+            case "TFS" -> TOYOTA_TFS;
+            case "VCA" -> VOLKSWAGEN_VCA;
+            case "VCFS" -> VOLVO_VCFS;
+            case "NONE" -> NONE;
+            default -> throw new IllegalArgumentException("Unknown lender abbreviation: " + lenderAbbreviation);
         };
     }
 }

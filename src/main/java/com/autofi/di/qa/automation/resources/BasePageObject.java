@@ -98,14 +98,13 @@ public abstract class BasePageObject {
         return getDriver().findElement(bySelector);
     }
 
-    public void scrollToElement(By bySelector, int xOffset, int yOffset){
-        WebElement element = getDriver().findElement(bySelector);
-        scrollToElement(element);
+    public void scrollToElement(By byLocator, int xOffset, int yOffset){
+        scrollToElement(byLocator);
     }
 
-    public void scrollToElement(WebElement element) {
+    public void scrollToElement(By byLocator) {
         Actions actions = new Actions(getDriver());
-        actions.scrollToElement(element);
+        actions.scrollToElement(getDriver().findElement(byLocator));
         actions.perform();
     }
 

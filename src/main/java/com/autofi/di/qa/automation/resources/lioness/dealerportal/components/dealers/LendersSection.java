@@ -16,30 +16,51 @@ public class LendersSection extends BasePageObject {
         this.pageName = pageName;
     }
 
-    public By middlemanDropdownBy = By.xpath("//select[@id='dealer.settings.middleman']");
-    public By routeOneIdBy = By.xpath("//input[@id='dealer.settings.routeOne.r1DealerId']");
-    public By dealerTrackUSIdBy = By.xpath("//input[@id='dealer.settings.dealertrack.dealerId']");
-    public By dealerTrackCAIdBy = By.xpath("//input[@id='dealer.settings.dealertrackCanada.dealerId']");
+    private By middlemanDropdownBy = By.xpath("//select[@id='dealer.settings.middleman']");
+    private By routeOneIdBy = By.xpath("//input[@id='dealer.settings.routeOne.r1DealerId']");
+    private By dealerTrackUSIdBy = By.xpath("//input[@id='dealer.settings.dealertrack.dealerId']");
+    private By dealerTrackCAIdBy = By.xpath("//input[@id='dealer.settings.dealertrackCanada.dealerId']");
 
-    private String templateForCaptiveLender = "//input[contains(@aria-label,'(CAPTIVE_LENDER_ABBREVIATION)')]/following-sibling::p";
+    // locate the input to click and select it; chain to the following "p" sibling to get the input label
+    private String templateForCaptiveLenderInput = "//input[contains(@aria-label,'(CAPTIVE_LENDER_ABBREVIATION)')]";
+    private By selectedCaptiveLenderInputBy = By.xpath(
+            "//h3[text()='Captive Lenders']/following-sibling::ul/" +
+            "descendant::input[@checked]"
+    );
 
-    private By getCaptiveLenderLocator(CaptiveLenders captiveLender) {
+    public By getCaptiveLenderBy(CaptiveLenders captiveLender) {
         String captiveLenderAbbreviation = CaptiveLenders.toLenderAbbreviation(captiveLender);
-        return getByFromXPathTemplate(templateForCaptiveLender, "CAPTIVE_LENDER_ABBREVIATION", captiveLenderAbbreviation, 10);
+        return getByFromXPathTemplate(templateForCaptiveLenderInput, "CAPTIVE_LENDER_ABBREVIATION", captiveLenderAbbreviation, 10);
     }
 
-    public WebElement getCaptiveLenderElement(CaptiveLenders captiveLender) {
-        By captiveLenderLocator = getCaptiveLenderLocator(captiveLender);
-        return getDriver().findElement(captiveLenderLocator);
+    private String getCaptiveLenderLabel(By captiveLenderBy) {
+        WebElement lenderElement = getDriver().findElement(captiveLenderBy);
+        WebElement captiveLenderTextElement = lenderElement.findElement(By.xpath("following-sibling::p"));
+        return captiveLenderTextElement.getText();
     }
 
-    public void scrollToCaptiveLender(CaptiveLenders captiveLender) {
-        scrollToElement(getCaptiveLenderElement(captiveLender));
+    public String getCaptiveLenderLabel(CaptiveLenders captiveLender) {
+        By captiveLenderBy = getCaptiveLenderBy(captiveLender);
+        return getCaptiveLenderLabel(captiveLenderBy);
     }
 
-    public String getCaptiveLenderText(CaptiveLenders captiveLender) {
-        By captiveLenderLocator = getCaptiveLenderLocator(captiveLender);
-        WebElement lenderElement = getDriver().findElement(captiveLenderLocator);
-        return lenderElement.getText();
+    public String getCaptiveLenderAbbreviation(String captiveLenderLabel) {
+        int openParensIndex = captiveLenderLabel.indexOf("(");
+        int closeParensIndex = captiveLenderLabel.indexOf(")");
+        return captiveLenderLabel.substring(openParensIndex + 1, closeParensIndex);
+    }
+
+    public CaptiveLenders getSelectedCaptiveLender() {
+       String captiveLenderLabel = getCaptiveLenderLabel(selectedCaptiveLenderInputBy);
+       String captiveLenderAbbrev = getCaptiveLenderAbbreviation(captiveLenderLabel);
+       return CaptiveLenders.toCaptiveLenders(captiveLenderAbbrev);
+    }
+
+    public boolean isSelectedCaptiveLender(CaptiveLenders captiveLender) {
+        return captiveLender == getSelectedCaptiveLender();
+    }
+
+    public void selectCaptiveLender(CaptiveLenders captiveLender) {
+        getDriver().findElement(getCaptiveLenderBy(captiveLender)).click();
     }
 }

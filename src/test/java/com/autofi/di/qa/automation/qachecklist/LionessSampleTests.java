@@ -4,7 +4,9 @@ import com.autofi.di.qa.automation.BaseTest;
 import com.autofi.di.qa.automation.resources.lioness.dealerportal.DealerPortal;
 import com.autofi.di.qa.automation.resources.lioness.dealerportal.components.dealers.CaptiveLenders;
 import com.autofi.di.qa.automation.resources.lioness.dealerportal.testSteps.dealers.DealerViewSteps;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -61,7 +63,7 @@ public class LionessSampleTests extends BaseTest {
     }
 
     @Test
-    public void testSelectingCaptiveAndNonCaptiveLenders() {
+    public void testSelectingCaptiveLenders() {
         // TODO: replace this with a call to a browser with an open port for debugging
         WebDriver driver = startTestDriver(TestBrowser.CHROME);
         driver.manage().window().maximize();
@@ -81,26 +83,43 @@ public class LionessSampleTests extends BaseTest {
         DealerViewSteps dealerViewSteps = new DealerViewSteps(driver);
 
         int lenderIndex = 0;
+
+
+
+        System.out.println("captive lender selected: " + dealerPortal.getDealerView().getLendersSection().getSelectedCaptiveLender());
+
+
         for (CaptiveLenders lender : CaptiveLenders.values()) {
 
             dealerPortal.scrollToElement(
-                    dealerPortal.getDealerView().getLendersSection().getCaptiveLenderElement(lender)
+                    dealerPortal.getDealerView().getLendersSection().getCaptiveLenderBy(lender)
             );
 
             // for now, scroll past the bottom section only on the first attempt
             if (lenderIndex == 0) {
                 dealerPortal.scrollByOffset(0, dealerViewSteps.getBottomSectionHeight());
             } else {
-                dealerPortal.scrollByOffset(0,
-                        dealerPortal.getDealerView().getLendersSection().
-                                getCaptiveLenderElement(lender).getRect().getHeight() + 10
+                By captiveLenderBy = dealerPortal.getDealerView().getLendersSection().
+                        getCaptiveLenderBy(lender);
+
+                WebElement captiveLenderElement = driver.findElement(captiveLenderBy);
+
+                dealerPortal.scrollByOffset(
+                        0,
+                        captiveLenderElement.getRect().getHeight() + 10
                 );
             }
 
             lenderIndex++;
 
-            String lenderText = dealerPortal.getDealerView().getLendersSection().getCaptiveLenderText(lender);
+            String lenderText = dealerPortal.getDealerView().getLendersSection().getCaptiveLenderLabel(lender);
             System.out.println(lenderText);
+
+            dealerPortal.getDealerView().getLendersSection().selectCaptiveLender(lender);
         }
+
+        dealerPortal.getDealerView().getLendersSection().selectCaptiveLender(CaptiveLenders.MAZDA_MAZ);
+        System.out.println("is Mazda the selected captive lender? " + dealerPortal.getDealerView().getLendersSection().
+                isSelectedCaptiveLender(CaptiveLenders.MAZDA_MAZ));
     }
 }

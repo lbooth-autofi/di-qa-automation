@@ -23,7 +23,9 @@ public class LendersSectionSteps extends BasePageObject {
         if (lender.getLenderType() == LenderType.CAPTIVE_LENDER) {
             CaptiveLender captiveLender = (CaptiveLender) lender;
             isInViewArea = dealerViewSteps.isElementInViewArea(
-                    lendersSection.getCaptiveLenderElement(captiveLender.getCaptiveLender())
+                    getDriver().findElement(
+                            lendersSection.getCaptiveLenderBy(captiveLender.getCaptiveLender())
+                    )
             );
         }
 
