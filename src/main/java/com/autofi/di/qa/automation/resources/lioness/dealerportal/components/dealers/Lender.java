@@ -1,12 +1,19 @@
 package com.autofi.di.qa.automation.resources.lioness.dealerportal.components.dealers;
 
-import com.autofi.di.qa.automation.resources.BasePageObject;
-import org.openqa.selenium.WebDriver;
-
 public abstract class Lender {
+    LenderType lenderType;
+    String lenderLabel;
+    String lenderAbbreviation;
 
-    public abstract LenderType getLenderType();
-    public abstract String toLenderName();
-    public abstract String toLenderAbbreviation();
+    public LenderType getLenderType() {
+        return this.lenderType;
+    }
 
+    public String getLenderLabel() {
+        return this.lenderLabel;
+    }
+
+    public String getLenderAbbreviation() {
+        return this.lenderAbbreviation;
+    }
 }

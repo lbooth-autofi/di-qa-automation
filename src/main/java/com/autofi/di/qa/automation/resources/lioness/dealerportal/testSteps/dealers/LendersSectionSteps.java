@@ -17,20 +17,20 @@ public class LendersSectionSteps extends BasePageObject {
 
     LendersSection lendersSection = new LendersSection(getDriver());
 
-    public boolean isLenderInViewArea(Lender lender) {
-        boolean isInViewArea = false;
-
-        if (lender.getLenderType() == LenderType.CAPTIVE_LENDER) {
-            CaptiveLender captiveLender = (CaptiveLender) lender;
-            isInViewArea = dealerViewSteps.isElementInViewArea(
-                    getDriver().findElement(
-                            lendersSection.getCaptiveLenderBy(captiveLender.getCaptiveLender())
-                    )
-            );
-        }
-
-        return isInViewArea;
-    }
+//    public boolean isLenderInViewArea(Lender lender) {
+//        boolean isInViewArea = false;
+//
+//        if (lender.getLenderType() == LenderType.CAPTIVE_LENDER) {
+//            CaptiveLender captiveLender = (CaptiveLender) lender;
+//            isInViewArea = dealerViewSteps.isElementInViewArea(
+//                    getDriver().findElement(
+//                            lendersSection.getCaptiveLenderBy(captiveLender.getLenderEnum())
+//                    )
+//            );
+//        }
+//
+//        return isInViewArea;
+//    }
 
     public void scrollLenderIntoViewArea(Lender lender) {
 
